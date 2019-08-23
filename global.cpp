@@ -47,3 +47,4 @@ void LoadPointSet(string filename,pcl::PointCloud<PointType>::Ptr cloud)
 		}
 	}
 }
+
