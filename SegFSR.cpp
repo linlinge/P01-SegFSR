@@ -45,7 +45,6 @@ void SegFSR::Init(V3 centre, V3 upright,V3 ref, float delta_arc)
 		
 	}
 	
-	// Remova all outliers 
-	
+	// Remova all outliers 	
 	
 }
