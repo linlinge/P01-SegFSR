@@ -7,7 +7,7 @@ This project is the code of 2d and 3d fusion by image segmentation technology.
 
 ## Instruction  
 * Orientations Class  
-name | 价格 
+name | 价格 |
 -|-|-
 Description | This class is used to generate suitable projection orientations. |
 Input | upright orientation, initial vector, interval arc |
