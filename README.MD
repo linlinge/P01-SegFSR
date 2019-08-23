@@ -7,6 +7,6 @@ This project is the code of 2d and 3d fusion by image segmentation technology.
 
 ## Instruction  
 * Orientations Class   
-**Description:** This class is used to generate suitable projection orientations.  
-**Input:** upright orientation, centre position, initial vector, interval angle   
-**output:** projection orientations  
+*Description:* This class is used to generate suitable projection orientations.  
+*Input:* upright orientation, centre position, initial vector, interval angle   
+*output:* projection orientations  
