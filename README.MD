@@ -16,12 +16,12 @@ This is the source code of segmentation based 2d-3d fusion for 3D Object filteri
 
 
 ## File Descriptions  
-* [*SegFSR.h, SegFSR.cpp*]()
-This file realize the main part.  
-* [*global.h, global.cpp*]()  
-Those files contain 
-* [*BoundingBox.h, BoundingBox.cpp*]()
-* [*zBuffer.h, zBuffer.cpp*]()
+* [*SegFSR.h, SegFSR.cpp*]()  
+This file realize the main part.   
+* [*global.h, global.cpp*]()   
+Those files contain   
+* [*BoundingBox.h, BoundingBox.cpp*]()  
+* [*zBuffer.h, zBuffer.cpp*]()  
 
 
 ## Pipeline
