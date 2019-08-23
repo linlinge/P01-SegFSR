@@ -1,5 +1,5 @@
 #include "SegFSR.h"
-void ProjectionOrientation::DirectionGenerator(V3 centre, V3 upright,V3 initial_vector, float delta_arc)
+void Orientations::DirectionGenerator(V3 centre, V3 upright,V3 initial_vector, float delta_arc)
 {	
 	V3 v3_left=Cross(initial_vector,upright);
 	initial_vector=Cross(upright,v3_left);

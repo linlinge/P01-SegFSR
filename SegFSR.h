@@ -1,5 +1,8 @@
 #include "global.h"
-class ProjectionOrientation
+/*
+		Generate projection orientations
+*/
+class Orientations
 {
 	public:		
 		vector<V3> orientations_;
@@ -8,3 +11,23 @@ class ProjectionOrientation
 		
 		void DirectionGenerator(V3 centre, V3 upright,V3 ref, float delta_arc);
 };
+
+/*
+		Segmentation based 2D-3D Fusion for 3D Filtering, Segmentation and Recognition
+*/
+class SegFSR
+{
+	public:
+		
+};
+
+
+
+
+
+
+
+
+
+
+
