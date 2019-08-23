@@ -5,11 +5,11 @@
 class Orientations
 {
 	public:		
-		vector<V3> orientations_;
+		vector<V3> dat_;
 		V3 upright_;
 		V3 initial_vector_;
 		
-		void DirectionGenerator(V3 centre, V3 upright,V3 ref, float delta_arc);
+		void Generator(V3 centre, V3 upright,V3 ref, float delta_arc);
 };
 
 /*
@@ -18,6 +18,10 @@ class Orientations
 class SegFSR
 {
 	public:
+		Orientations orientations_;		// store the orientations
+		vector<int> outliers_idx_;  	// store the indices for outliers
+		
+		void Init(V3 centre, V3 upright,V3 ref, float delta_arc);
 		
 };
 

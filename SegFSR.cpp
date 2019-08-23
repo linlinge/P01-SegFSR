@@ -1,5 +1,5 @@
 #include "SegFSR.h"
-void Orientations::DirectionGenerator(V3 centre, V3 upright,V3 initial_vector, float delta_arc)
+void Orientations::Generator(V3 centre, V3 upright,V3 initial_vector, float delta_arc)
 {	
 	V3 v3_left=Cross(initial_vector,upright);
 	initial_vector=Cross(upright,v3_left);
@@ -22,6 +22,30 @@ void Orientations::DirectionGenerator(V3 centre, V3 upright,V3 initial_vector, f
 		
 		V3 tmp=V3(des_vector.ptr  <double>(0)[0],des_vector.ptr<double>(1)[0],des_vector.ptr<double>(2)[0]);
 		tmp=tmp.Normalize();
-		orientations_.push_back(tmp);
+		dat_.push_back(tmp);
 	}
+}
+
+
+
+void SegFSR::Init(V3 centre, V3 upright,V3 ref, float delta_arc)
+{
+	// Generate projection orientations
+	orientations_.Generator(V3 centre, V3 upright,V3 ref, float delta_arc);
+	
+	// Find the outliers
+	for(int k=0; k< orientations_.dat_.size();k++){
+		// Generate projection images
+		
+	
+		// Image Segmentation
+		
+		
+		// store outlier indices
+		
+	}
+	
+	// Remova all outliers 
+	
+	
 }
