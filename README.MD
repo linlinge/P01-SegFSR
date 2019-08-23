@@ -2,5 +2,5 @@
 This project is the code of 2d and 3d fusion by image segmentation technology.
 
 ## Depenencies
-* opencv  
-* pcl  
+* OpenCV  
+* PCL
