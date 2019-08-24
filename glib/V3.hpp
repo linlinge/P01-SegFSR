@@ -5,7 +5,9 @@
 #include <limits.h>
 #include <iostream>
 #include <pcl/point_types.h>
+#include <opencv2/opencv.hpp>
 using namespace std;
+using namespace cv;
 #define PI 3.1415926535897
 #define MAX2(a,b) (a>b? a:b)
 
@@ -28,6 +30,36 @@ public:
 		g = g1;
 		b = b1;
 	}
+	V3(Mat dat)
+	{
+		int rows=dat.rows;
+		int cols=dat.cols;
+		if(rows==1 && dat.type()==CV_32F)
+		{
+			x=dat.at<float>(0,0);
+			y=dat.at<float>(0,1);
+			z=dat.at<float>(0,2);
+		}
+		else if(rows==1 && dat.type()==CV_64F)
+		{
+			x=dat.at<double>(0,0);
+			y=dat.at<double>(0,1);
+			z=dat.at<double>(0,2);
+		}
+		else if(cols==1 && dat.type()==CV_32F)
+		{
+			x=dat.at<float>(0,0);
+			y=dat.at<float>(1,0);
+			z=dat.at<float>(2,0);
+		}
+		else if(cols==1 && dat.type()==CV_64F)
+		{
+			x=dat.at<double>(0,0);
+			y=dat.at<double>(1,0);
+			z=dat.at<double>(2,0);
+		}		
+	}
+	
 	V3& operator=(const V3 & obj)
 	{
 		r = obj.r;

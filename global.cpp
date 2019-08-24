@@ -55,14 +55,6 @@ float Norm(PointType p)
 
 
 
-Mat Vector2Rotation(V3 orientation, float arc)
-{
-	orientation=orientation.Normalize();
-	Mat rotation_vector = (Mat_<float>(3, 1) << orientation.x,orientation.y,orientation.z);   // rotation vector
-	Mat rotation_matrix;                                            // rotaiton matrix
-	Rodrigues(rotation_vector, rotation_matrix);                    // calculate 
-	return rotation_matrix;
-}
 
 Mat Vector2Rotation(V3 orientation_and_arc)
 {
