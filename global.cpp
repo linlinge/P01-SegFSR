@@ -48,3 +48,28 @@ void LoadPointSet(string filename,pcl::PointCloud<PointType>::Ptr cloud)
 	}
 }
 
+float Norm(PointType p)
+{
+	return sqrt(p.x*p.x+p.y*p.y+p.z*p.z);
+}
+
+
+
+Mat Vector2Rotation(V3 orientation, float arc)
+{
+	orientation=orientation.Normalize();
+	Mat rotation_vector = (Mat_<float>(3, 1) << orientation.x,orientation.y,orientation.z);   // rotation vector
+	Mat rotation_matrix;                                            // rotaiton matrix
+	Rodrigues(rotation_vector, rotation_matrix);                    // calculate 
+	return rotation_matrix;
+}
+
+Mat Vector2Rotation(V3 orientation_and_arc)
+{
+	float arc=orientation_and_arc.Norm();
+	V3 orientation=orientation_and_arc/arc;
+	Mat rotation_vector = (Mat_<float>(3, 1) << orientation.x,orientation.y,orientation.z);   // rotation vector
+	Mat rotation_matrix;                                            // rotaiton matrix
+	Rodrigues(rotation_vector, rotation_matrix);                    // calculate 
+	return rotation_matrix;
+}

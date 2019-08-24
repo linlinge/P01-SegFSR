@@ -1,28 +1,26 @@
 #include "global.h"
+#include "BoundingBox.h"
 /*
-		Generate projection orientations
-*/
-class Orientations
-{
-	public:		
-		vector<V3> dat_;
-		V3 upright_;
-		V3 initial_vector_;
-		
-		void Generator(V3 centre, V3 upright,V3 ref, float delta_arc);
-};
-
-/*
-		Segmentation based 2D-3D Fusion for 3D Filtering, Segmentation and Recognition
+	Image Segmentation based 2D-3D Fusion for 3D Object Filtering, Segmentation and Recognition
 */
 class SegFSR
 {
 	public:
-		Orientations orientations_;		// store the orientations
+		vector<V3> orientations_;
 		vector<int> outliers_idx_;  	// store the indices for outliers
+		pcl::PointCloud<PointType>::Ptr cloud_;
+		float delta_arc_;
+		PointType p_upright_,p_forward_,p_left_,p_centre_;
+		V3 v_upright_,v_forward_,v_left_;
+		pcl::visualization::PCLVisualizer viewer;
 		
-		void Init(V3 centre, V3 upright,V3 ref, float delta_arc);
 		
+		SegFSR(pcl::PointCloud<PointType>::Ptr cloud, float delta_arc);  // initial
+		void UprightEstimation();
+		void OrientationsGenerator();
+		Mat Projection(V3 projection_orientation);
+		void Viewer(pcl::PointCloud<PointType>::Ptr cloud);
+		void Run();
 };
 
 

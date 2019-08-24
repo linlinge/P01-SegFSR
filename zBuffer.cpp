@@ -2,6 +2,7 @@
 #include <math.h>
 #include <iostream>
 using namespace std;
+
 zBuffer::zBuffer(pcl::PointCloud<PointType>::Ptr cloud)
 {	
 	// init

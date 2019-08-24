@@ -23,6 +23,6 @@ class BoundingBox
 		V3 color_;
 		
         // Functions		
-        BoundingBox(pcl::PointCloud<PointType>::Ptr cloud, string id,V3 color=V3(1.0,0.0,0.0));
+        BoundingBox(pcl::PointCloud<PointType>::Ptr cloud, string id="default",V3 color=V3(1.0,0.0,0.0));
 		friend void DisplayBoundingBox(pcl::visualization::PCLVisualizer& viewer, pcl::PointCloud<PointType>::Ptr cloud, BoundingBox bb);
 };

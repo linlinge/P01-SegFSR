@@ -60,15 +60,15 @@ V3 Line::TransformTo(ProjectionType mode)
 {
 	if(mode==XY)
 	{
-		return GetProjectionVector(XY).Normalize()*Direction_.GetNorm() + Point_;
+		return GetProjectionVector(XY).Normalize()*Direction_.Norm() + Point_;
 	} 
 	else if(mode == YZ)
 	{
-		return GetProjectionVector(YZ).Normalize()*Direction_.GetNorm() + Point_;
+		return GetProjectionVector(YZ).Normalize()*Direction_.Norm() + Point_;
 	}
 	else if(mode == XZ)
 	{
-		return GetProjectionVector(XZ).Normalize()*Direction_.GetNorm() + Point_;
+		return GetProjectionVector(XZ).Normalize()*Direction_.Norm() + Point_;
 	}
 }
 

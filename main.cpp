@@ -14,10 +14,10 @@ using namespace pcl;
 int main(int argc, char **argv)
 {	
 	// load point cloud 	
-	//pcl::PointCloud<PointType>::Ptr cloud(new pcl::PointCloud<PointType>());
-	// LoadPointSet(argv[1],cloud);
-	
-	
+	pcl::PointCloud<PointType>::Ptr cloud(new pcl::PointCloud<PointType>());
+	LoadPointSet(argv[1],cloud);
+	SegFSR alg(cloud,CV_PI/30.0f);
+	alg.Run();
 	
 	
 	
@@ -60,11 +60,18 @@ int main(int argc, char **argv)
 	imwrite(string(argv[2]),buf.img_);
 	buf.LoadMask("1-mask.png");  */
 	
-	ProjectionOrientation po;
-	po.DirectionGenerator(V3(0,0,0), V3(1,0,1),V3(0,1,0), CV_PI/60.0f);
 	
 	// display point cloud
-	pcl::visualization::PCLVisualizer viewer;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/* pcl::visualization::PointCloudColorHandlerRGBField<PointType> multi_color(cloud);  //输入的初始点云相关
 	viewer.addPointCloud(cloud, multi_color, "cloud");	
 	DisplayBoundingBox(viewer,cloud,BoundingBox(cloud,"cloud",V3(0.0,1.0,1.0)));  */
@@ -78,21 +85,11 @@ int main(int argc, char **argv)
 	viewer.setShapeRenderingProperties(pcl::visualization::PCL_VISUALIZER_COLOR, 0.0, 0.0, 1.0, "bbox"); */	
 	//viewer.addCoordinateSystem(0.5f);	
 	
-	viewer.setBackgroundColor(1.0, 1.0, 1.0);
 	
 	
 	
-	//添加箭头	
-	for(int i=0;i<po.orientations_.size();i++)
-	{
-		viewer.addArrow<pcl::PointXYZ>(pcl::PointXYZ(po.orientations_[i].x,po.orientations_[i].y,po.orientations_[i].z), pcl::PointXYZ(0,0,0), 1.0f, 0.0f, 0,false, "d"+to_string(i));
-	}	
-	viewer.addArrow<pcl::PointXYZ>(pcl::PointXYZ(po.upright_.x,po.upright_.y,po.upright_.z), pcl::PointXYZ(0,0,0), 0.0f, 1.0f, 0,false, "Z");	
 	
-	while (!viewer.wasStopped())
-	{
-		viewer.spinOnce(100);
-	}
+
 	
 	// projection
 	/* 

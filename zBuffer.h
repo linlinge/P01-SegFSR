@@ -4,6 +4,7 @@
 #include "global.h"
 using namespace std;
 #define IMAGE_WIDTH 800.0
+
 class PixelInfo
 {
 	public:
@@ -25,3 +26,5 @@ class zBuffer
 		void GetImage(int mode=0);
 		void LoadMask(string mask_path);
 };
+
+

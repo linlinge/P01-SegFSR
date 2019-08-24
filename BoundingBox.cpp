@@ -79,6 +79,13 @@ BoundingBox::BoundingBox(pcl::PointCloud<PointType>::Ptr cloud,string id,V3 colo
 	v4_.y=cen_tf_(1)+whd_(1)/2.0;
 	v4_.z=cen_tf_(2)-whd_(2)/2.0;
 	v4_=pcl::transformPoint(v4_,Eigen::Affine3f(tm_inv));	
+	
+	
+	cout<<"BoundingBox"<<endl;
+	cout<<cp_<<endl;
+	cout<<pcX_<<endl;
+	cout<<pcY_<<endl;
+	cout<<pcZ_<<endl;
 }
 
 void DisplayBoundingBox(pcl::visualization::PCLVisualizer& viewer, pcl::PointCloud<PointType>::Ptr cloud, BoundingBox bb)
