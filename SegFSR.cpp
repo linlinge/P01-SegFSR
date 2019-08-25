@@ -53,7 +53,7 @@ void SegFSR::Run()
 	OrientationsGenerator();
 	
 	// Find the outliers
-	for(int k=0; k< orientations_.size();k++){		
+	/* for(int k=0; k< orientations_.size();k++){		
 		// Generate projection images
 		Projection(orientations_[k]);
 	
@@ -64,10 +64,11 @@ void SegFSR::Run()
 		// Store outlier indices
 	
 		break;
-	}
+	} */
 	
 	// Remova all outliers 	
 	
+	Viewer(cloud_);
 }
 
 
@@ -92,7 +93,7 @@ Mat SegFSR::Projection(V3 projection_orientation)
 	
 	Viewer(cloud_f); */
 }
-
+ 
 
 void SegFSR::Viewer(pcl::PointCloud<PointType>::Ptr cloud)
 {
@@ -100,21 +101,21 @@ void SegFSR::Viewer(pcl::PointCloud<PointType>::Ptr cloud)
 	pcl::visualization::PointCloudColorHandlerRGBField<PointType> multi_color(cloud); 	
 	viewer.addPointCloud<PointType> (cloud, multi_color, "sample cloud");  
 	
-/* 	// add arrow
-	viewer.addArrow<PointType>(alg.p_upright_, alg.p_centre_, 1.0f, 0, 0, false, "X");
-	viewer.addArrow<PointType>(alg.p_forward_, alg.p_centre_, 0.0f, 1.0f, 0, false, "Y");
-	viewer.addArrow<PointType>(alg.p_left_, alg.p_centre_, 0.0f, 0.0f, 1.0f, false, "Z");
+	// add arrow
+	viewer.addArrow<PointType>(p_upright_, p_centre_, 1.0f, 0, 0, false, "X");
+	viewer.addArrow<PointType>(p_forward_, p_centre_, 0.0f, 1.0f, 0, false, "Y");
+	viewer.addArrow<PointType>(p_left_, p_centre_, 0.0f, 0.0f, 1.0f, false, "Z");
 	
 	
-	for(int i=0;i< alg.orientations_.size();i++)
+	for(int i=0;i< orientations_.size();i++)
 	{
 		string tmp="orientation"+std::to_string(i);
 		PointType p_tmp;
-		p_tmp.x=alg.orientations_[i].x+alg.p_centre_.x;
-		p_tmp.y=alg.orientations_[i].y+alg.p_centre_.y;
-		p_tmp.z=alg.orientations_[i].z+alg.p_centre_.z;
-		viewer.addArrow<PointType>(p_tmp, alg.p_centre_, 1.0f, 1.0f, 0.0f, false, tmp);
-	} */
+		p_tmp.x=orientations_[i].x+p_centre_.x;
+		p_tmp.y=orientations_[i].y+p_centre_.y;
+		p_tmp.z=orientations_[i].z+p_centre_.z;
+		viewer.addArrow<PointType>(p_tmp, p_centre_, 1.0f, 1.0f, 0.0f, false, tmp);
+	}
 	
 	while(!viewer.wasStopped()){	
 		viewer.spin();

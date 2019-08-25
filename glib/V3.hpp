@@ -10,6 +10,12 @@ using namespace std;
 using namespace cv;
 #define PI 3.1415926535897
 #define MAX2(a,b) (a>b? a:b)
+#define X_AXIS 0
+#define Y_AXIS 1
+#define Z_AXIS 2
+#define XOY 3
+#define XOZ 4
+#define YOZ 5
 
 class V3
 {
@@ -233,4 +239,41 @@ public:
 		os << dat.x << " " << dat.y << " " << dat.z;
 		return os;
 	}	
+	
+	// 0 : X
+	// 1 : Y
+	// 2 : Z
+	float get_rotation_arc(int rotation_axis, int plane)
+	{
+		float arc;
+		if(rotation_axis == X_AXIS && plane == XOY)
+		{
+			
+		}
+		else if(rotation_axis == X_AXIS && plane == XOZ)
+		{
+			
+		}
+		else if(rotation_axis == Y_AXIS && plane == XOY)
+		{
+			
+		}
+		else if(rotation_axis == Y_AXIS && plane == YOZ)
+		{
+			
+		}
+		else if(rotation_axis == Z_AXIS && plane == XOZ)
+		{
+			
+		}
+		else if(rotation_axis == Z_AXIS && plane == YOZ)
+		{
+			arc=atan(x/y);
+			if(x<0 && y>0) // Second quadrant
+				arc=CV_PI-arc;
+			else if(x>0 && y<0) // Fourth quadrant
+				arc=CV_PI+ arc;			
+		}
+		return arc;
+	}
 };

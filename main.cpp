@@ -14,55 +14,42 @@ using namespace pcl;
 int main(int argc, char **argv)
 {	
 	// load point cloud 	
-	/*
+	
+	/* 	
 		pcl::PointCloud<PointType>::Ptr cloud(new pcl::PointCloud<PointType>());
 		LoadPointSet(argv[1],cloud);
-		SegFSR alg(cloud,CV_PI/30.0f);
-		alg.Run(); 
-	*/
+		SegFSR alg(cloud,CV_PI/30.0f);		
+		alg.Run();  
+	*/	
 	
-	
-	Mat vec01=(Mat_<float>(3,1) <<1,1,0);
-	Mat R=Vector2Rotation(V3(0,0,1)*CV_PI/4.0f);
+	Mat vec01=(Mat_<float>(3,1) <<3.10995, 3.85341, 2.31991);
+	 V3 tmp=V3(vec01);
+	/*double theta=atan(tmp.x/tmp.y);	
+	Mat R=Vector2Rotation(V3(0,0,1)*theta);
 	Mat vec02=R*vec01;
+	cout<<vec02<<endl;
 	
 	V3 v1=V3(vec01);
-	V3 v2=V3(vec02);
-
-	
-
-	
+	V3 v2=V3(vec02);	
 	
 	pcl::visualization::PCLVisualizer viewer;
 	viewer.setBackgroundColor(1.0, 1.0, 1.0);
 	viewer.addCoordinateSystem(1.0f);
- 	// add arrow
-	viewer.addArrow<pcl::PointXYZ>(pcl::PointXYZ(v1.x,v1.y,v1.z), pcl::PointXYZ(0,0,0), 1.0f, 0, 0, false, "X");
+	// add arrow
+	viewer.addArrow<pcl::PointXYZ>(pcl::PointXYZ(v1.x,v1.y,v1.z), pcl::PointXYZ(0,0,0), 1.0f, 1.0f, 0, false, "X");
 	viewer.addArrow<pcl::PointXYZ>(pcl::PointXYZ(v2.x,v2.y,v2.z), pcl::PointXYZ(0,0,0), 1.0f, 0, 0, false, "Y");
 	
 	while(!viewer.wasStopped()){	
 		viewer.spin();
 		boost::this_thread::sleep (boost::posix_time::microseconds (10));
-	}
+	} */
+	
+	
+	cout<<tmp.get_rotation_arc(Z_AXIS,YOZ)/CV_PI*180<<endl;
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	  
 	/* // get bounding box
 	BoundingBox bb(cloud,"cloud");	
 	
@@ -104,10 +91,6 @@ int main(int argc, char **argv)
 	
 	
 	// display point cloud
-	
-	
-	
-	
 	
 	
 	
