@@ -22,8 +22,10 @@ int main(int argc, char **argv)
 		alg.Run();  
 	*/	
 	
-	Mat vec01=(Mat_<float>(3,1) <<-1,-1,1);
-	Mat R=GetRotationMatrixToAxis(V3(vec01),X_AXIS);		
+	
+	
+	/* Mat vec01=(Mat_<float>(3,1) <<1,1,1);
+	Mat R=GetRotationMatrixToAxis(V3(vec01),Y_AXIS);		
 	Mat vec02=R*vec01;
 	
 	//Mat vec02=R01*vec01;
@@ -41,7 +43,7 @@ int main(int argc, char **argv)
 	while(!viewer.wasStopped()){	
 		viewer.spin();
 		boost::this_thread::sleep (boost::posix_time::microseconds (10));
-	} 
+	}  */
 	
 	
 	  

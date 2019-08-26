@@ -122,7 +122,7 @@ Mat GetRotationMatrixToAxis(V3 vec, int axis)
 		Mat vec1=R1*vec.ToMat(1);
 		cout<<V3(vec1)<<endl;
 		
-		float beta=V3(vec1).GetArcToPlane(Y_AXIS,YOZ);	
+		float beta=V3(vec1).GetArcToPlane(Y_AXIS,XOY);	
 		cout<<"beta:"<<beta/CV_PI*180<<endl;
 		
 		
