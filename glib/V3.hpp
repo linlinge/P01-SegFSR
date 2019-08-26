@@ -322,4 +322,21 @@ public:
 		
 		return arc;
 	}
+	
+	Mat get_rotation_matrix_to_axis(int axis)
+	{
+		if(axis==X_AXIS)
+		{
+			float alpha=get_rotation_arc(X_AXIS,XOY);
+			V3 tmp=*this
+		}
+		else if(axis == Y_AXIS)
+		{
+			
+		}
+		else if(axis == Z_AXIS)
+		{
+			
+		}
+	}
 };

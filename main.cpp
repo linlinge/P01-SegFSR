@@ -22,24 +22,28 @@ int main(int argc, char **argv)
 		alg.Run();  
 	*/	
 	
-	Mat vec01=(Mat_<float>(3,1) <<-5.11868, 9.94284, -10);	 
+	Mat vec01=(Mat_<float>(3,1) <<-1,-1,1);	 
 	float theta01=V3(vec01).get_rotation_arc(Z_AXIS,XOZ);
 	Mat R01=Vector2Rotation(V3(0,0,1)*theta01);
-	float theta02=V3(vec01).get_rotation_arc(Z_AXIS,YOZ);
-	Mat R02=Vector2Rotation(V3(0,0,1)*theta02);
+	Mat vec02=R01*vec01;
 	
-	Mat vec02=R02*R01*vec01;
-	cout<<vec02<<endl;
+	float theta02=V3(vec02).get_rotation_arc(Y_AXIS,YOZ);
+	Mat R02=Vector2Rotation(V3(0,1,0)*theta02);
+	
+	Mat vec03=R02*vec02;
+	
+	//Mat vec02=R01*vec01;
+	cout<<vec03<<endl;
 	
 	V3 v1=V3(vec01);
-	V3 v2=V3(vec02);	
+	V3 v2=V3(vec03);	
 	
 	pcl::visualization::PCLVisualizer viewer;
 	viewer.setBackgroundColor(1.0, 1.0, 1.0);
 	viewer.addCoordinateSystem(1.0f);
 	// add arrow
-	viewer.addArrow<pcl::PointXYZ>(pcl::PointXYZ(v1.x,v1.y,v1.z), pcl::PointXYZ(0,0,0), 1.0f, 1.0f, 0, false, "X");
-	viewer.addArrow<pcl::PointXYZ>(pcl::PointXYZ(v2.x,v2.y,v2.z), pcl::PointXYZ(0,0,0), 1.0f, 0, 0, false, "Y");
+	viewer.addArrow<pcl::PointXYZ>(pcl::PointXYZ(v1.x,v1.y,v1.z), pcl::PointXYZ(0,0,0), 1.0f, 0.0f, 0, false, "X");
+	viewer.addArrow<pcl::PointXYZ>(pcl::PointXYZ(v2.x,v2.y,v2.z), pcl::PointXYZ(0,0,0), 1.0f, 1.0f, 0, false, "Y");
 	
 	while(!viewer.wasStopped()){	
 		viewer.spin();
