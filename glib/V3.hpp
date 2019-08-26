@@ -240,40 +240,86 @@ public:
 		return os;
 	}	
 	
-	// 0 : X
-	// 1 : Y
-	// 2 : Z
 	float get_rotation_arc(int rotation_axis, int plane)
 	{
-		float arc;
-		if(rotation_axis == X_AXIS && plane == XOY)
-		{
-			
+		float arc;		
+		if(rotation_axis == X_AXIS && plane == XOZ)
+		{	
+			if(y==0)
+			{
+				cout<<"1"<<endl;
+				arc=CV_PI/2.0f;
+			}
+			else if(z==0)
+			{
+				cout<<"2"<<endl;
+				arc=0;
+			}
+			else if(y*z>0)
+			{
+				cout<<"3"<<endl;
+				arc=atan(y/z);
+			}
+			else
+			{
+				cout<<"4"<<endl;
+				arc=CV_PI/2.0f+atan(y/z);
+			}
 		}
-		else if(rotation_axis == X_AXIS && plane == XOZ)
-		{
-			
-		}
+		else if(rotation_axis == X_AXIS && plane == XOY)
+		{		
+			if(y==0)
+				arc=0;
+			else if(z==0)
+				arc=CV_PI/2.0f;
+			else 
+				arc=CV_PI/2.0f+atan(y/z);
+		}		
 		else if(rotation_axis == Y_AXIS && plane == XOY)
-		{
-			
+		{		
+			if(x==0)
+				arc=CV_PI/2.0f;
+			else if(z==0)
+				arc=0;
+			else if(x*z>0)
+				arc=atan(z/x);
+			else 
+				arc=CV_PI+atan(z/x);
 		}
 		else if(rotation_axis == Y_AXIS && plane == YOZ)
-		{
-			
-		}
-		else if(rotation_axis == Z_AXIS && plane == XOZ)
-		{
-			
+		{		
+			if(x==0)
+				arc=0;
+			else if(z==0)
+				arc=CV_PI/2.0f;
+			else
+			{
+				cout<<"z"<<z<<endl;
+				cout<<"x"<<x<<endl;
+				arc=CV_PI/2.0f+atan(z/x);
+			}
 		}
 		else if(rotation_axis == Z_AXIS && plane == YOZ)
-		{
-			arc=atan(x/y);
-			if(x<0 && y>0) // Second quadrant
-				arc=CV_PI-arc;
-			else if(x>0 && y<0) // Fourth quadrant
-				arc=CV_PI+ arc;			
+		{		
+			if(x==0)
+				arc=CV_PI/2.0f;
+			else if(y==0)
+				arc=0;
+			else if(x*y>0)
+				arc=atan(x/y);
+			else
+				arc=CV_PI+atan(x/y);
 		}
+		else if(rotation_axis == Z_AXIS && plane == XOZ)
+		{			
+			if(x==0)				
+				arc=CV_PI/2.0f;			
+			else if(y==0)				
+				arc=0;			
+			else
+				arc=CV_PI/2.0f+atan(x/y);			
+		}
+		
 		return arc;
 	}
 };

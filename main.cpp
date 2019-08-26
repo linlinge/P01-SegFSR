@@ -22,11 +22,13 @@ int main(int argc, char **argv)
 		alg.Run();  
 	*/	
 	
-	Mat vec01=(Mat_<float>(3,1) <<3.10995, 3.85341, 2.31991);
-	 V3 tmp=V3(vec01);
-	/*double theta=atan(tmp.x/tmp.y);	
-	Mat R=Vector2Rotation(V3(0,0,1)*theta);
-	Mat vec02=R*vec01;
+	Mat vec01=(Mat_<float>(3,1) <<-5.11868, 9.94284, -10);	 
+	float theta01=V3(vec01).get_rotation_arc(Z_AXIS,XOZ);
+	Mat R01=Vector2Rotation(V3(0,0,1)*theta01);
+	float theta02=V3(vec01).get_rotation_arc(Z_AXIS,YOZ);
+	Mat R02=Vector2Rotation(V3(0,0,1)*theta02);
+	
+	Mat vec02=R02*R01*vec01;
 	cout<<vec02<<endl;
 	
 	V3 v1=V3(vec01);
@@ -42,12 +44,7 @@ int main(int argc, char **argv)
 	while(!viewer.wasStopped()){	
 		viewer.spin();
 		boost::this_thread::sleep (boost::posix_time::microseconds (10));
-	} */
-	
-	
-	cout<<tmp.get_rotation_arc(Z_AXIS,YOZ)/CV_PI*180<<endl;
-	
-	
+	}
 	
 	  
 	/* // get bounding box
