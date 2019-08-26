@@ -30,6 +30,7 @@ int main(int argc, char **argv)
 	V3 v1=V3(vec01);
 	V3 v2=V3(vec02);
 	
+	
 	pcl::visualization::PCLVisualizer viewer;
 	viewer.setBackgroundColor(1.0, 1.0, 1.0);
 	viewer.addCoordinateSystem(1.0f);
@@ -40,7 +41,8 @@ int main(int argc, char **argv)
 	while(!viewer.wasStopped()){	
 		viewer.spin();
 		boost::this_thread::sleep (boost::posix_time::microseconds (10));
-	}
+	} 
+	
 	
 	  
 	/* // get bounding box

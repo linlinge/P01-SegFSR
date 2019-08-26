@@ -251,15 +251,11 @@ public:
 				arc=0;
 			else if(y*z>0)
 			{
-				cout<<"1-1"<<x<<" "<<y<<" "<<z<<endl;
 				arc=atan(y/z);
-				cout<<"arc"<<arc<<endl;
 			}
 			else
 			{
-				cout<<"1-2:"<<x<<" "<<y<<" "<<z<<endl;
-				arc=CV_PI/2.0f+atan(y/z);
-				cout<<"arc"<<arc<<endl;
+				arc=CV_PI+atan(y/z);
 			}
 		}
 		else if(rotation_axis == X_AXIS && plane == XOY)
