@@ -40,3 +40,7 @@ public:
 	Angle(V3& mid,V3& left,V3& right);
 };
 
+
+// 
+Mat VectorToRotation(V3 orientation_and_arc);
+Mat GetRotationMatrixToAxis(V3 vec, int axis);

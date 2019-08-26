@@ -99,3 +99,57 @@ Angle::Angle(V3& mid, V3& left, V3& right)
 	arc_=GetArc(line1,line2);
 	angle_ = arc_ * 180.0 / PI;
 }
+
+
+
+Mat VectorToRotation(V3 orientation_and_arc)
+{	
+	Mat rotation_vector = (Mat_<float>(3, 1) << orientation_and_arc.x,orientation_and_arc.y,orientation_and_arc.z);   // rotation vector
+	Mat rotation_matrix;                                            // rotaiton matrix
+	Rodrigues(rotation_vector, rotation_matrix);                    // calculate 
+	return rotation_matrix;
+}
+
+Mat GetRotationMatrixToAxis(V3 vec, int axis)
+{
+	if(axis==X_AXIS)
+	{
+		float alpha=vec.GetArcToPlane(X_AXIS,XOZ);
+		cout<<vec<<endl;
+		cout<<"alpha:"<<alpha/CV_PI*180<<endl;
+		
+		Mat R1=VectorToRotation(V3(1,0,0)*alpha);
+		Mat vec1=R1*vec.ToMat(1);
+		cout<<V3(vec1)<<endl;
+		
+		float beta=V3(vec1).GetArcToPlane(Y_AXIS,YOZ);	
+		cout<<"beta:"<<beta/CV_PI*180<<endl;
+		
+		
+		Mat R2=VectorToRotation(V3(0,1,0)*beta);
+		
+		return R2*R1;
+	}
+	else if(axis == Y_AXIS)
+	{
+		float alpha=vec.GetArcToPlane(Y_AXIS,XOY);
+		Mat R1=VectorToRotation(V3(0,1,0)*alpha);
+		Mat vec1=R1*vec.ToMat(1);
+		
+		float beta=V3(vec1).GetArcToPlane(Z_AXIS,YOZ);
+		Mat R2=VectorToRotation(V3(0,0,1)*beta);
+		
+		return R2*R1;
+	}
+	else if(axis == Z_AXIS)
+	{
+		float alpha=vec.GetArcToPlane(Z_AXIS,YOZ);
+		Mat R1=VectorToRotation(V3(0,0,1)*alpha);
+		Mat vec1=R1*vec.ToMat(1);
+		
+		float beta=V3(vec1).GetArcToPlane(X_AXIS,XOZ);
+		Mat R2=VectorToRotation(V3(1,0,0)*beta);
+		
+		return R2*R1;
+	}
+}

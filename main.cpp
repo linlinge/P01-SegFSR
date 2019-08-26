@@ -22,21 +22,13 @@ int main(int argc, char **argv)
 		alg.Run();  
 	*/	
 	
-	Mat vec01=(Mat_<float>(3,1) <<-1,-1,1);	 
-	float theta01=V3(vec01).get_rotation_arc(Z_AXIS,XOZ);
-	Mat R01=Vector2Rotation(V3(0,0,1)*theta01);
-	Mat vec02=R01*vec01;
-	
-	float theta02=V3(vec02).get_rotation_arc(Y_AXIS,YOZ);
-	Mat R02=Vector2Rotation(V3(0,1,0)*theta02);
-	
-	Mat vec03=R02*vec02;
+	Mat vec01=(Mat_<float>(3,1) <<-1,-1,1);
+	Mat R=GetRotationMatrixToAxis(V3(vec01),X_AXIS);		
+	Mat vec02=R*vec01;
 	
 	//Mat vec02=R01*vec01;
-	cout<<vec03<<endl;
-	
 	V3 v1=V3(vec01);
-	V3 v2=V3(vec03);	
+	V3 v2=V3(vec02);
 	
 	pcl::visualization::PCLVisualizer viewer;
 	viewer.setBackgroundColor(1.0, 1.0, 1.0);

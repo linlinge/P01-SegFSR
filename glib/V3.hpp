@@ -240,30 +240,26 @@ public:
 		return os;
 	}	
 	
-	float get_rotation_arc(int rotation_axis, int plane)
+	float GetArcToPlane(int rotation_axis, int plane)
 	{
 		float arc;		
 		if(rotation_axis == X_AXIS && plane == XOZ)
 		{	
 			if(y==0)
-			{
-				cout<<"1"<<endl;
 				arc=CV_PI/2.0f;
-			}
 			else if(z==0)
-			{
-				cout<<"2"<<endl;
 				arc=0;
-			}
 			else if(y*z>0)
 			{
-				cout<<"3"<<endl;
+				cout<<"1-1"<<x<<" "<<y<<" "<<z<<endl;
 				arc=atan(y/z);
+				cout<<"arc"<<arc<<endl;
 			}
 			else
 			{
-				cout<<"4"<<endl;
+				cout<<"1-2:"<<x<<" "<<y<<" "<<z<<endl;
 				arc=CV_PI/2.0f+atan(y/z);
+				cout<<"arc"<<arc<<endl;
 			}
 		}
 		else if(rotation_axis == X_AXIS && plane == XOY)
@@ -293,11 +289,7 @@ public:
 			else if(z==0)
 				arc=CV_PI/2.0f;
 			else
-			{
-				cout<<"z"<<z<<endl;
-				cout<<"x"<<x<<endl;
 				arc=CV_PI/2.0f+atan(z/x);
-			}
 		}
 		else if(rotation_axis == Z_AXIS && plane == YOZ)
 		{		
@@ -323,20 +315,17 @@ public:
 		return arc;
 	}
 	
-	Mat get_rotation_matrix_to_axis(int axis)
+	Mat ToMat(int row_or_col)
 	{
-		if(axis==X_AXIS)
+		if(row_or_col==0)
 		{
-			float alpha=get_rotation_arc(X_AXIS,XOY);
-			V3 tmp=*this
+			Mat dat=(Mat_<float>(1,3)<<x,y,z);
+			return dat;
 		}
-		else if(axis == Y_AXIS)
+		else
 		{
-			
-		}
-		else if(axis == Z_AXIS)
-		{
-			
+			Mat dat=(Mat_<float>(3,1)<<x,y,z);
+			return dat;
 		}
 	}
 };

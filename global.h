@@ -33,6 +33,3 @@ void LoadPointSet(string filename, pcl::PointCloud<PointType>::Ptr cloud);
 // get norm
 float Norm(PointType p);
 
-// 
-Mat Vector2Rotation(V3 orientation_and_arc);
-

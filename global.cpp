@@ -52,14 +52,3 @@ float Norm(PointType p)
 {
 	return sqrt(p.x*p.x+p.y*p.y+p.z*p.z);
 }
-
-
-
-
-Mat Vector2Rotation(V3 orientation_and_arc)
-{	
-	Mat rotation_vector = (Mat_<float>(3, 1) << orientation_and_arc.x,orientation_and_arc.y,orientation_and_arc.z);   // rotation vector
-	Mat rotation_matrix;                                            // rotaiton matrix
-	Rodrigues(rotation_vector, rotation_matrix);                    // calculate 
-	return rotation_matrix;
-}
