@@ -10,8 +10,6 @@
 #include <pcl/common/transforms.h>
 #include <pcl/common/common.h>
 #include <pcl/visualization/pcl_visualizer.h>
-/* #include <pcl/ModelCoefficients.h>
-#include <pcl/filters/project_inliers.h> */
 #include <math.h>
 #include <opencv2/opencv.hpp>
 #include "V2.hpp"
