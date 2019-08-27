@@ -15,16 +15,22 @@ int main(int argc, char **argv)
 {	
 	// load point cloud 	
 	
-	/* 	
-		pcl::PointCloud<PointType>::Ptr cloud(new pcl::PointCloud<PointType>());
-		LoadPointSet(argv[1],cloud);
-		SegFSR alg(cloud,CV_PI/30.0f);		
-		alg.Run();  
-	*/	
+	
+	pcl::PointCloud<PointType>::Ptr cloud(new pcl::PointCloud<PointType>());
+	boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer(new pcl::visualization::PCLVisualizer ("3D Viewer"));
+	LoadPointSet(argv[1],cloud);
+	SegFSR alg(cloud,CV_PI/30.0f,viewer);		
+	alg.Run();  
+	
+	viewer->addCoordinateSystem(1.0f);
+	while(!viewer->wasStopped()){	
+		viewer->spin();
+		boost::this_thread::sleep (boost::posix_time::microseconds (10));
+	}
 	
 	
-	
-	/* Mat vec01=(Mat_<float>(3,1) <<1,1,1);
+	/*
+	Mat vec01=(Mat_<float>(3,1) <<-1,-1,-1);
 	Mat R=GetRotationMatrixToAxis(V3(vec01),Y_AXIS);		
 	Mat vec02=R*vec01;
 	
@@ -43,7 +49,8 @@ int main(int argc, char **argv)
 	while(!viewer.wasStopped()){	
 		viewer.spin();
 		boost::this_thread::sleep (boost::posix_time::microseconds (10));
-	}  */
+	}  
+	*/
 	
 	
 	  

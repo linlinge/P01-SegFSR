@@ -1,6 +1,7 @@
 #pragma once
 #include "V3.hpp"
 #include <iostream>
+#include <Eigen/Core>
 using namespace std;
 
 enum LineInitType{PD,PP};
@@ -44,3 +45,4 @@ public:
 // 
 Mat VectorToRotation(V3 orientation_and_arc);
 Mat GetRotationMatrixToAxis(V3 vec, int axis);
+Eigen::MatrixXf MatToMatrixXf(Mat dat);

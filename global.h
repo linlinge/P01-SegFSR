@@ -16,11 +16,13 @@
 #include <opencv2/opencv.hpp>
 #include "V2.hpp"
 #include "V3.hpp"
+#include "BasicGeometry.h"
 /* VTK_MODULE_INIT(vtkRenderingOpenGL);
 VTK_MODULE_INIT(vtkInteractionStyle);
 VTK_MODULE_INIT(vtkRenderingFreeType); */
 typedef pcl::PointXYZRGBA PointType;
 using namespace cv;
+using namespace std;
 
 
 // convert quaternion to rotation matrix

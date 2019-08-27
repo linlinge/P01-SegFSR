@@ -153,3 +153,31 @@ Mat GetRotationMatrixToAxis(V3 vec, int axis)
 		return R2*R1;
 	}
 }
+
+
+Eigen::MatrixXf MatToMatrixXf(Mat dat)
+{
+	Eigen::MatrixXf rst(dat.rows,dat.cols);
+	
+	if(dat.type()==CV_32F)
+	{
+		for(int i=0;i<dat.rows;i++)
+		{
+			for(int j=0;j<dat.cols;j++)
+			{
+				rst(i,j)=dat.at<float>(i,j);
+			}
+		}
+	}
+	else if(dat.type()==CV_64F)
+	{
+		for(int i=0;i<dat.rows;i++)
+		{
+			for(int j=0;j<dat.cols;j++)
+			{
+				rst(i,j)=dat.at<double>(i,j);
+			}
+		}
+	}
+	return rst;
+}
