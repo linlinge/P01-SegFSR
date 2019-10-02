@@ -1,17 +1,18 @@
 #include "SegFSR.h"
-ZBuffer::ZBuffer(int rows, pcl::PointCloud<PointType>::Ptr cloud,int axis)
+ZBuffer::ZBuffer(pcl::PointCloud<PointType>::Ptr cloud,int axis,double max_dist)
 {
 	// Generate Picture
 	PointType min,max;
     pcl::getMinMax3D(*cloud,min,max);
-	float border_width=(max.x-min.x)*0.1;
+	float border_width=(max.x-min.x)*0.01;
 	min.x=min.x-border_width;
 	max.x=max.x+border_width;
 	min.y=min.y-border_width;
 	max.y=max.y+border_width;
 	
 	// initial
-	rows_=rows; cols_=(int)((max.x-min.x)/(max.y-min.y)*rows_);
+	cols_=floor((max.x-min.x)/max_dist)+1;
+	rows_=floor((max.y-min.y)/max_dist)+1;
 	vector<float> tmp;
 	tmp.resize(cols_);
 	for(int i=0;i<rows_;i++)
@@ -23,55 +24,65 @@ ZBuffer::ZBuffer(int rows, pcl::PointCloud<PointType>::Ptr cloud,int axis)
 		}
 	}
 	
-	img_.create(rows_,cols_, CV_8UC3);
+	img_.create(rows_,cols_, CV_8UC1);
 	for(int i=0;i<rows_;i++){
 		for(int j=0;j<cols_;j++){
-			img_.at<cv::Vec3b>(i,j)[0]=255;
-			img_.at<cv::Vec3b>(i,j)[1]=255;
-			img_.at<cv::Vec3b>(i,j)[2]=255;
+			img_.at<uchar>(i,j)=255;
 		}
 	}
 	
 	float delta_x=(max.x-min.x)/cols_;
-	float delta_y=(max.y-min.y)/rows_;
+	float delta_y=(max.y-min.y)/rows_;	
 	
-	
-	for(int k=0;k<cloud->points.size();k++)
-	{
+	for(int k=0;k<cloud->points.size();k++){
+		
 		int j=floor((cloud->points[k].x-min.x)/delta_x);
 		int i=floor((cloud->points[k].y-min.y)/delta_y);
-		//cout<<"("<<i<<","<<j<<",["<<cloud->points[k].x<<","<<cloud->points[k].y<<","<<cloud->points[k].z<<"])"<<endl;
 		
 		if(depth_[i][j]<cloud->points[k].z){
 			depth_[i][j]=cloud->points[k].z;
-			
-			
-			/* 
-			img_.at<Vec3b>(i,j)[0]=cloud->points[k].b;
-			img_.at<Vec3b>(i,j)[1]=cloud->points[k].g;
-			img_.at<Vec3b>(i,j)[2]=cloud->points[k].r; 
-			*/
-			
-			img_.at<cv::Vec3b>(i,j)[0]=0;
-			img_.at<cv::Vec3b>(i,j)[1]=0;
-			img_.at<cv::Vec3b>(i,j)[2]=0;
+			img_.at<uchar>(i,j)=0;
 		}
 	}
 
+	// Category of each pixel 
+	int count=0;
+	vector<int> vflag;
+	vflag.resize(img_.rows*img_.cols);
+	for(int i=0;i<vflag.size();i++) vflag[i]=INT_MAX; // useless flag
+	
+	
+	for(int i=1;i<img_.rows;i++){
+		for(int j=1;j<img_.cols;j++){
+			if(img_.at<uchar>(i,j)==0){								
+				// up 
+				if(img_.at<uchar>(i-1,j)==0){
+					vflag[i*img_.cols+j]=vflag[(i-1)*img_.cols+j];
+					break;
+				}
+				// left
+				if(img_.at<uchar>(i,j-1)==0){
+					vflag[i*img_.cols+j]=vflag[i*img_.cols+j-1]; 
+					break;
+				}
+				
+				if(i-1)
+			}				
+		}
+	}		
 	
 	
 	cv::imshow("3D Viewer",img_);
-	cv::imwrite("1.jpg",img_);
+	cv::imwrite("1.bmp",img_);
 	cv::waitKey(0);
 }
 
-
-SegFSR::SegFSR(pcl::PointCloud<PointType>::Ptr cloud, float delta_arc,boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer)
+SegFSR::SegFSR(pcl::PointCloud<PointType>::Ptr cloud, float delta_arc)
 {
 	cloud_=cloud;
 	delta_arc_=delta_arc;
-	viewer_=viewer;
-	viewer_->setBackgroundColor(1.0, 1.0, 1.0);
+	//max_dist=ComputeMaxDistance(cloud);
+	max_dist=ComputeMeanDistance(cloud)*10;
 }
 
 void SegFSR::UprightEstimation()
@@ -122,7 +133,7 @@ void SegFSR::Run()
 	OrientationsGenerator();
 	
 	// 
-	Projection(orientations_[0],400);
+	Projection(orientations_[0]);
 	
 	
 	// Find the outliers
@@ -143,12 +154,14 @@ void SegFSR::Run()
 	
 	
 	// demonstrate the result
-	/* cout<<"cloud_"<<endl;
-	Viewer(cloud_,"cloud"); */
+	/* 
+		cout<<"cloud_"<<endl;
+		Viewer(cloud_,"cloud"); 
+	*/
 }
 
 
-cv::Mat SegFSR::Projection(V3 projection_orientation,int rows)
+cv::Mat SegFSR::Projection(V3 projection_orientation)
 {	
 	pcl::PointCloud<PointType>::Ptr tf_cloud (new pcl::PointCloud<PointType> ());
 	
@@ -162,17 +175,17 @@ cv::Mat SegFSR::Projection(V3 projection_orientation,int rows)
 	tf.rotate(Eigen::AngleAxisf(alpha, Eigen::Vector3f::UnitZ()));
 	tf.rotate(Eigen::AngleAxisf(beta, Eigen::Vector3f::UnitX()));	
 	pcl::transformPointCloud (*cloud_, *tf_cloud, tf);	
-	ZBuffer zb(rows,tf_cloud,Z_AXIS);			
+	ZBuffer zb(tf_cloud,Z_AXIS,max_dist);			
 	return zb.img_;	
 }
  
 
 
-void SegFSR::Viewer(pcl::PointCloud<PointType>::Ptr cloud,string id)
+void SegFSR::Viewer(pcl::PointCloud<PointType>::Ptr cloud,string id, boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer)
 {
-	
+	viewer->setBackgroundColor(1.0, 1.0, 1.0);	
 	pcl::visualization::PointCloudColorHandlerRGBField<PointType> multi_color(cloud); 	
-	viewer_->addPointCloud<PointType> (cloud, multi_color, id);  
+	viewer->addPointCloud<PointType> (cloud, multi_color, id);  
 	
 /* 	// add arrow
 	viewer.addArrow<PointType>(p_upright_, p_centre_, 1.0f, 0, 0, false, "X");

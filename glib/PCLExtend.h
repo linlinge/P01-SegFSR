@@ -9,3 +9,4 @@
 #define PointType pcl::PointXYZRGBA
 #endif
 double ComputeMeanDistance(const pcl::PointCloud<PointType>::ConstPtr cloud);
+double ComputeMaxDistance(const pcl::PointCloud<PointType>::ConstPtr cloud);

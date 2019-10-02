@@ -16,11 +16,11 @@ int main(int argc, char **argv)
 	if (pcl::io::loadPLYFile<PointType>(argv[1], *cloud) == -1){
 		PCL_ERROR("Couldn't read file test_pcd.pcd \n");
 		return (-1);
-	}
+	}	
 	
-	
-	SegFSR alg(cloud,CV_PI/30.0f,viewer);		
-	alg.Run();  
+	SegFSR alg(cloud,CV_PI/30.0f);		
+	alg.Run(); 
+	alg.Viewer(cloud,"1",viewer);
 	
 	viewer->addCoordinateSystem(1.0f);
 	while(!viewer->wasStopped()){	
