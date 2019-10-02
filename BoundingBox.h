@@ -1,11 +1,20 @@
 #pragma once
-#include "global.h"
-#include <ostream>
 #include <iostream>
+#include <string>
+#include <pcl/io/ply_io.h>
+#include <Eigen/Core>
+#include <pcl/common/transforms.h>
+#include <pcl/common/common.h>
+#include <pcl/visualization/pcl_visualizer.h>
 #include <math.h>
 #include "V3.hpp"
 #include <vector>
 using namespace std;
+#ifndef PointType
+#define PointType pcl::PointXYZRGBA
+#endif
+
+
 
 class BoundingBox
 {
@@ -26,3 +35,4 @@ class BoundingBox
         BoundingBox(pcl::PointCloud<PointType>::Ptr cloud, string id="default",V3 color=V3(1.0,0.0,0.0));
 		friend void DisplayBoundingBox(pcl::visualization::PCLVisualizer& viewer, pcl::PointCloud<PointType>::Ptr cloud, BoundingBox bb);
 };
+

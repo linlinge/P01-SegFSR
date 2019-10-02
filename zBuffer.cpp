@@ -69,14 +69,14 @@ void zBuffer::GetImage(int mode)
 		for(int i=0;i<image_height_;i++){
 			for(int j=0;j<image_width_;j++){			
 				if(dat_[i][j].dat_.size()!=0){
-					img_.at<Vec3b>(i,j)[0]=dat_[i][j].dat_[0].b;
-					img_.at<Vec3b>(i,j)[1]=dat_[i][j].dat_[0].g;
-					img_.at<Vec3b>(i,j)[2]=dat_[i][j].dat_[0].r;
+					img_.at<cv::Vec3b>(i,j)[0]=dat_[i][j].dat_[0].b;
+					img_.at<cv::Vec3b>(i,j)[1]=dat_[i][j].dat_[0].g;
+					img_.at<cv::Vec3b>(i,j)[2]=dat_[i][j].dat_[0].r;
 				}
 				else{
-					img_.at<Vec3b>(i,j)[0]=255;
-					img_.at<Vec3b>(i,j)[1]=255;
-					img_.at<Vec3b>(i,j)[2]=255;
+					img_.at<cv::Vec3b>(i,j)[0]=255;
+					img_.at<cv::Vec3b>(i,j)[1]=255;
+					img_.at<cv::Vec3b>(i,j)[2]=255;
 				}				
 			}
 		}
@@ -87,7 +87,7 @@ void zBuffer::LoadMask(string mask_path)
 {
 	pcl::PointCloud<PointType>::Ptr p_tmp(new pcl::PointCloud<PointType>);
 	mask_path="1-mask.png";
-	Mat img=imread(mask_path,0);
+	cv::Mat img=cv::imread(mask_path,0);
 	for(int i=0;i<img.rows;i++)
 	{
 		for(int j=0;j<img.cols;j++)

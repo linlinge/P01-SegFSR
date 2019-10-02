@@ -43,6 +43,6 @@ public:
 
 
 // 
-Mat VectorToRotation(V3 orientation_and_arc);
-Mat GetRotationMatrixToAxis(V3 vec, int axis);
-Eigen::MatrixXf MatToMatrixXf(Mat dat);
+cv::Mat VectorToRotation(V3 orientation_and_arc);
+cv::Mat GetRotationMatrixToAxis(V3 vec, int axis);
+Eigen::MatrixXf MatToMatrixXf(cv::Mat dat);

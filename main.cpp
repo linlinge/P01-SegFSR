@@ -1,24 +1,24 @@
-#include "global.h"
-#include "FileExtend.h"
-#include "BoundingBox.h"
+#include <iostream>
+/*
 #include "BasicGeometry.h"
 #include "zBuffer.h"
 #include "V3.hpp"
-#include <pcl/registration/transformation_estimation_3point.h>
+#include <pcl/registration/transformation_estimation_3point.h> 
+*/
 #include "SegFSR.h"
 using namespace std;
-using namespace cv;
-using namespace pcl;
-
 
 int main(int argc, char **argv)
 {	
-	// load point cloud 	
-	
-	
+	// load point cloud
 	pcl::PointCloud<PointType>::Ptr cloud(new pcl::PointCloud<PointType>());
 	boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer(new pcl::visualization::PCLVisualizer ("3D Viewer"));
-	LoadPointSet(argv[1],cloud);
+	if (pcl::io::loadPLYFile<PointType>(argv[1], *cloud) == -1){
+		PCL_ERROR("Couldn't read file test_pcd.pcd \n");
+		return (-1);
+	}
+	
+	
 	SegFSR alg(cloud,CV_PI/30.0f,viewer);		
 	alg.Run();  
 	

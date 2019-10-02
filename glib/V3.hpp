@@ -6,8 +6,6 @@
 #include <iostream>
 #include <pcl/point_types.h>
 #include <opencv2/opencv.hpp>
-using namespace std;
-using namespace cv;
 #define PI 3.1415926535897
 #define MAX2(a,b) (a>b? a:b)
 #define X_AXIS 0
@@ -36,7 +34,7 @@ public:
 		g = g1;
 		b = b1;
 	}
-	V3(Mat dat)
+	V3(cv::Mat dat)
 	{
 		int rows=dat.rows;
 		int cols=dat.cols;
@@ -311,16 +309,16 @@ public:
 		return arc;
 	}
 	
-	Mat ToMat(int row_or_col)
+	cv::Mat ToMat(int row_or_col)
 	{
 		if(row_or_col==0)
 		{
-			Mat dat=(Mat_<float>(1,3)<<x,y,z);
+			cv::Mat dat=(cv::Mat_<float>(1,3)<<x,y,z);
 			return dat;
 		}
 		else
 		{
-			Mat dat=(Mat_<float>(3,1)<<x,y,z);
+			cv::Mat dat=(cv::Mat_<float>(3,1)<<x,y,z);
 			return dat;
 		}
 	}

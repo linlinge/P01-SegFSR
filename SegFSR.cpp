@@ -26,16 +26,16 @@ ZBuffer::ZBuffer(int rows, pcl::PointCloud<PointType>::Ptr cloud,int axis)
 	img_.create(rows_,cols_, CV_8UC3);
 	for(int i=0;i<rows_;i++){
 		for(int j=0;j<cols_;j++){
-			img_.at<Vec3b>(i,j)[0]=255;
-			img_.at<Vec3b>(i,j)[1]=255;
-			img_.at<Vec3b>(i,j)[2]=255;
+			img_.at<cv::Vec3b>(i,j)[0]=255;
+			img_.at<cv::Vec3b>(i,j)[1]=255;
+			img_.at<cv::Vec3b>(i,j)[2]=255;
 		}
 	}
 	
 	float delta_x=(max.x-min.x)/cols_;
 	float delta_y=(max.y-min.y)/rows_;
 	
-	cout<<"1"<<endl;	
+	
 	for(int k=0;k<cloud->points.size();k++)
 	{
 		int j=floor((cloud->points[k].x-min.x)/delta_x);
@@ -52,17 +52,17 @@ ZBuffer::ZBuffer(int rows, pcl::PointCloud<PointType>::Ptr cloud,int axis)
 			img_.at<Vec3b>(i,j)[2]=cloud->points[k].r; 
 			*/
 			
-			img_.at<Vec3b>(i,j)[0]=0;
-			img_.at<Vec3b>(i,j)[1]=0;
-			img_.at<Vec3b>(i,j)[2]=0;
+			img_.at<cv::Vec3b>(i,j)[0]=0;
+			img_.at<cv::Vec3b>(i,j)[1]=0;
+			img_.at<cv::Vec3b>(i,j)[2]=0;
 		}
 	}
-	cout<<"2"<<endl;
+
 	
 	
-	imshow("3D Viewer",img_);
-	imwrite("1.jpg",img_);
-	waitKey(0);
+	cv::imshow("3D Viewer",img_);
+	cv::imwrite("1.jpg",img_);
+	cv::waitKey(0);
 }
 
 
@@ -95,15 +95,15 @@ void SegFSR::UprightEstimation()
 
 void SegFSR::OrientationsGenerator()
 {		
-	Mat mat_initial_vector = (Mat_<double>(3, 1) << v_forward_.x, v_forward_.y , v_forward_.z);   // initial vector
+	cv::Mat mat_initial_vector = (cv::Mat_<double>(3, 1) << v_forward_.x, v_forward_.y , v_forward_.z);   // initial vector
 	int n=floor(2*CV_PI/delta_arc_);
 	for(int i=0;i<=n;i++)
 	{
 		V3 v3_rotation_vector= v_upright_*delta_arc_*i;	
-		Mat mat_rotation_vector = (Mat_<double>(3, 1) << v3_rotation_vector.x, v3_rotation_vector.y, v3_rotation_vector.z); 		
-		Mat rotation_matrix;                                            // rotaiton matrix
+		cv::Mat mat_rotation_vector = (cv::Mat_<double>(3, 1) << v3_rotation_vector.x, v3_rotation_vector.y, v3_rotation_vector.z); 		
+		cv::Mat rotation_matrix;                                            // rotaiton matrix
 		Rodrigues(mat_rotation_vector, rotation_matrix);
-		Mat des_vector = rotation_matrix * mat_initial_vector;
+		cv::Mat des_vector = rotation_matrix * mat_initial_vector;
 		
 		V3 tmp=V3(des_vector.ptr  <double>(0)[0],des_vector.ptr<double>(1)[0],des_vector.ptr<double>(2)[0]);
 		tmp=tmp.Normalize();
@@ -148,7 +148,7 @@ void SegFSR::Run()
 }
 
 
-Mat SegFSR::Projection(V3 projection_orientation,int rows)
+cv::Mat SegFSR::Projection(V3 projection_orientation,int rows)
 {	
 	pcl::PointCloud<PointType>::Ptr tf_cloud (new pcl::PointCloud<PointType> ());
 	
