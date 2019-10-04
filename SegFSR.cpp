@@ -44,33 +44,6 @@ ZBuffer::ZBuffer(pcl::PointCloud<PointType>::Ptr cloud,int axis,double max_dist)
 			img_.at<uchar>(i,j)=0;
 		}
 	}
-
-	// Category of each pixel 
-	int count=0;
-	vector<int> vflag;
-	vflag.resize(img_.rows*img_.cols);
-	for(int i=0;i<vflag.size();i++) vflag[i]=INT_MAX; // useless flag
-	
-	
-	for(int i=1;i<img_.rows;i++){
-		for(int j=1;j<img_.cols;j++){
-			if(img_.at<uchar>(i,j)==0){								
-				// up 
-				if(img_.at<uchar>(i-1,j)==0){
-					vflag[i*img_.cols+j]=vflag[(i-1)*img_.cols+j];
-					break;
-				}
-				// left
-				if(img_.at<uchar>(i,j-1)==0){
-					vflag[i*img_.cols+j]=vflag[i*img_.cols+j-1]; 
-					break;
-				}
-				
-				if(i-1)
-			}				
-		}
-	}		
-	
 	
 	cv::imshow("3D Viewer",img_);
 	cv::imwrite("1.bmp",img_);
