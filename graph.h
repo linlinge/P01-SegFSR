@@ -4,6 +4,7 @@
 #include <math.h>
 #include <queue>
 #include <stdio.h>
+#include "V2I.hpp"
 using namespace std;
 class Element
 {
@@ -49,7 +50,14 @@ class VertexNode{
 class Result{
 	public:
 		int number_;
-		vector<int> pts_;
+		vector<V2I> pLoc_;
+		void Insert(int val,int& cols){
+			number_++;
+			V2I tmp;
+			tmp.i_=val/cols;
+			tmp.j_=val%cols;			
+			pLoc_.push_back(tmp);
+		}		
 };
 
 class Graph
@@ -63,10 +71,11 @@ class Graph
 		vector<Element> v_lock_;
 		vector<Element> v_active_;
 		vector<bool> is_visited_;
+		vector<Result> rst_;
 		
 		
 		void Establish(cv::Mat& vertices);
-		int BFS(int start_vertex,vector<int>& pts);
+		int BFS(int start_vertex,Result& rst_tmp);
 		void Run();
 		void Print(); 
 		

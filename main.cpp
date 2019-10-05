@@ -6,7 +6,7 @@
 #include <pcl/registration/transformation_estimation_3point.h> 
 */
 #include "SegFSR.h"
-#include "graph.h"
+
 using namespace std;
 
 int main(int argc, char **argv)
@@ -15,31 +15,32 @@ int main(int argc, char **argv)
 	/* cv::Mat v=(cv::Mat_<uchar>(4,5)<<1,0,0,1,0,1,0,0,1,1,1,0,0,1,1,0,1,1,1,1);
 	cout<<v<<endl; */
 	
-	cv::Mat v=cv::imread(argv[1],0);
-	/* cv::imshow("2D Viewer",v);
-	cv::waitKey(0); */
+	/* cv::Mat v=cv::imread(argv[1],0);
 	Graph gh;
 	gh.Establish(v);
 	gh.Run();
-	gh.Print();
+	gh.Print(); */
 
 	// load point cloud
-	/*
+	
 	pcl::PointCloud<PointType>::Ptr cloud(new pcl::PointCloud<PointType>());
 	boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer(new pcl::visualization::PCLVisualizer ("3D Viewer"));
 	if (pcl::io::loadPLYFile<PointType>(argv[1], *cloud) == -1){
 		PCL_ERROR("Couldn't read file test_pcd.pcd \n");
 		return (-1);
 	}
-	SegFSR alg(cloud,CV_PI/30.0f);		
+	SegFSR alg;
+	alg.Init02(cloud,100);
 	alg.Run();
-	alg.Viewer(cloud,"1",viewer);
+	
+	
+	/* alg.Viewer(viewer);
 	viewer->addCoordinateSystem(1.0f);
 	while(!viewer->wasStopped()){
 		viewer->spin();
 		boost::this_thread::sleep (boost::posix_time::microseconds (10));
-	}
-	*/
+	} */
+	
 	
 	
 	

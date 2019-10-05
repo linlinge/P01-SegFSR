@@ -87,12 +87,12 @@ void Graph::Establish(cv::Mat& vertices)
 	}
 }
 
-int Graph::BFS(int start_vertex,vector<int>& pts)
+int Graph::BFS(int start_vertex,Result& rst_tmp)
 {
 	int count=0;
 	queue<int> Q;
 	Q.push(start_vertex);
-	pts.push_back(start_vertex);
+	rst_tmp.Insert(start_vertex,vcols_);
 	count++;
 	is_visited_[start_vertex]=true; // mark it is visited
 	while(!Q.empty()){
@@ -105,7 +105,7 @@ int Graph::BFS(int start_vertex,vector<int>& pts)
 				count++;
 				is_visited_[j]=true;
 				Q.push(j);
-				pts.push_back(j);
+				rst_tmp.Insert(j,vcols_);
 			}
 		}
 	}
@@ -114,30 +114,22 @@ int Graph::BFS(int start_vertex,vector<int>& pts)
 
 void Graph::Run()
 {
-	cout<<endl<<"Running..."<<endl;
-	vector<Result> rst;
-	
+	/* cout<<endl<<"Running..."<<endl; */
 	for(int i=0;i<is_visited_.size();i++)
 	{
 		if(is_visited_[i]==false)
 		{
 			Result rst_tmp;
-			rst_tmp.number_ = BFS(i,rst_tmp.pts_);
-			rst.push_back(rst_tmp);
+			rst_tmp.number_ = BFS(i,rst_tmp);
+			rst_.push_back(rst_tmp);
 		}
 	}
-	sort(rst.begin(),rst.end(),[](const Result& e1,const Result& e2){ return e1.number_ > e2.number_;});
+	sort(rst_.begin(),rst_.end(),[](const Result& e1,const Result& e2){ return e1.number_ > e2.number_;});
 	
-	for(int k=0;k<rst[0].number_;k++){
-		int i,j;
-		cvt(rst[0].pts_[k],i,j);
-		vertices_.at<uchar>(i,j)=100;
-	}
-	cv::imshow("2D Viewer",vertices_);
+	/* cv::imshow("2D Viewer",vertices_);
 	cv::imwrite("tmp.bmp",vertices_);
-	cv::waitKey(0);
-	
-	cout<<"Done!"<<endl;
+	cv::waitKey(0); 	
+	cout<<"Done!"<<endl;*/
 }
 
 void Graph::Print()

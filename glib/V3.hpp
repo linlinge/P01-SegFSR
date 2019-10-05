@@ -190,7 +190,7 @@ public:
 
 	friend float GetArc(V3 dat1, V3 dat2)
 	{
-		float cos_theta = Dot(dat1.Normalize(), dat2.Normalize());
+		float cos_theta = Dot(dat1.GetNormalize(), dat2.GetNormalize());
 		float theta = acos(cos_theta);
 		return theta;
 	}
@@ -211,13 +211,13 @@ public:
 	}
 
 
-	float Norm()
+	float GetLength()
 	{		
 		return sqrt(x*x + y * y + z * z);
 	}
+	
 
-
-	V3 Normalize()
+	V3 GetNormalize()
 	{
 		V3 rst;
 		float a = sqrt(x*x + y * y + z * z);
@@ -225,6 +225,14 @@ public:
 		rst.z = z / a;
 		rst.x = x / a;
 		return rst;
+	}
+	
+	void Normalize()
+	{
+		float a = sqrt(x*x + y * y + z * z);
+		x = x / a;
+		y = y / a;
+		z = z / a;		
 	}
 
 	void Clear()
@@ -321,5 +329,5 @@ public:
 			cv::Mat dat=(cv::Mat_<float>(3,1)<<x,y,z);
 			return dat;
 		}
-	}
+	}	
 };

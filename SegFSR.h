@@ -12,17 +12,35 @@
 #include "V3.hpp"
 #include "BasicGeometry.h"
 #include "PCLExtend.h"
+#include <cstdlib>
+#include <ctime>
+#include "graph.h"
 using namespace std;
 /*
 	Image Segmentation based 2D-3D Fusion for 3D Object Filtering, Segmentation and Recognition
 */
+class ZElement
+{
+	public:
+		int depth_;
+		vector<int> dat_;
+		ZElement(){
+			depth_=-INT_MAX;
+		}
+};
+
 class ZBuffer 
 {
 	public:
 		int rows_,cols_;
-		vector<vector<float>> depth_;
-		cv::Mat img_;
-		ZBuffer(pcl::PointCloud<PointType>::Ptr cloud, int axis, double max_dist);
+		vector<vector<ZElement>>  dat_; //
+		cv::Mat img_;		
+		void Init(pcl::PointCloud<PointType>::Ptr cloud, int axis, double max_dist);
+		void Init(pcl::PointCloud<PointType>::Ptr cloud,int axis);
+		void Clear(){
+			rows_=0;
+			cols_=0;			
+		}
 };
 
 class SegFSR
@@ -32,18 +50,34 @@ class SegFSR
 		vector<int> outliers_idx_;  	// store the indices for outliers
 		pcl::PointCloud<PointType>::Ptr cloud_;
 		float delta_arc_;
+		int n_;
 		PointType p_upright_,p_forward_,p_left_,p_centre_;
 		V3 v_upright_,v_forward_,v_left_;
 		// boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer_;
-		double max_dist;
+		double mean_dist;
+		vector<ZBuffer> bufs_;  // n*1
 		
 		
-		SegFSR(pcl::PointCloud<PointType>::Ptr cloud, float delta_arc);  // initial
+		void Init01(pcl::PointCloud<PointType>::Ptr cloud, float delta_arc);  // initial		
+		void Init02(pcl::PointCloud<PointType>::Ptr cloud, int n);  // initial		
+		void OrientationsGenerator01();
+		void OrientationsGenerator02();
+		void ProjectionGenerator();
+		void Viewer(boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer);
+		void Run();
+
+		
+		// inner function
 		void UprightEstimation();
-		void OrientationsGenerator();
-		cv::Mat Projection(V3 projection_orientation);
-		void Viewer(pcl::PointCloud<PointType>::Ptr cloud,string id, boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer);
-		void Run();		
+		V3 RandomV3Generator(){
+			V3 tmp;
+			//srand((int)time(0));
+			tmp.x=(rand()%100-50)/100.0;
+			tmp.y=(rand()%100-50)/100.0;
+			tmp.z=(rand()%100-50)/100.0;
+			tmp.Normalize();
+			return tmp;
+		}
 };
 
 
