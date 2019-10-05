@@ -15,6 +15,10 @@
 #include <cstdlib>
 #include <ctime>
 #include "graph.h"
+#include "omp.h"
+#include<random>
+#include<cmath>
+#include<chrono>
 using namespace std;
 /*
 	Image Segmentation based 2D-3D Fusion for 3D Object Filtering, Segmentation and Recognition
@@ -69,15 +73,6 @@ class SegFSR
 		
 		// inner function
 		void UprightEstimation();
-		V3 RandomV3Generator(){
-			V3 tmp;
-			//srand((int)time(0));
-			tmp.x=(rand()%100-50)/100.0;
-			tmp.y=(rand()%100-50)/100.0;
-			tmp.z=(rand()%100-50)/100.0;
-			tmp.Normalize();
-			return tmp;
-		}
 };
 
 

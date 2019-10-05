@@ -162,10 +162,18 @@ void SegFSR::OrientationsGenerator01()
 // Approach 02: Random Generator
 void SegFSR::OrientationsGenerator02()
 {
-	for(int i=0;i<n_;i++){
-		orientations_[i]=RandomV3Generator();
-		cout<<orientations_[i]<<endl;
-	}		
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::mt19937 generator (seed);
+    std::uniform_real_distribution<double> uniform01(0.0, 1.0);
+	
+	for (int i = 0; i < n_; i++) {
+        // incorrect way
+        double theta = 2 * M_PI * uniform01(generator);
+        double phi = acos(1 - 2 * uniform01(generator));
+        orientations_[i].x = sin(phi) * cos(theta);
+        orientations_[i].y = sin(phi) * sin(theta);
+        orientations_[i].z = cos(phi);
+    }	
 }
 
 
@@ -183,6 +191,7 @@ void SegFSR::Run()
 	
 	// Outlier Removal
 	cout<<"3"<<endl;
+	#pragma omp parallel for
 	for(int i=0;i<n_;i++){
 		Graph gh;
 		gh.Establish(bufs_[i].img_);
